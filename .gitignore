@@ -1,0 +1,11 @@
+# .gitignore
+
+# Ignore local configuration files.
+/.rspec
+/.ruby-gemset
+/.ruby-version
+
+# Ignore temporary files.
+/.byebug_history
+/spec/examples.txt
+/tmp
