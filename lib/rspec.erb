@@ -1,2 +1,15 @@
 <%# lib/rspec.erb %>
-RSpec file, yo!
+<% require 'sleeping_king_studios/tools' %>
+<% tools = SleepingKingStudios::Tools::Toolbelt.new %>
+# <%= file_path %>
+
+<% full_path = [*relative_path, file_name.sub(/_spec\z/, '')] %>
+require '<%= full_path.join('/') %>'
+
+<%
+  qualified_module =
+    full_path.map { |rel| tools.string.camelize(rel) }.join('::')
+%>
+RSpec.describe <%= qualified_module %> do
+  pending
+end # describe
