@@ -1,21 +1,25 @@
-# spec/ruby_spec.rb
+# frozen_string_literal: true
 
-require 'erubis'
+require 'erubi'
 
 RSpec.describe 'ruby.erb' do
   let(:locals) do
     {
-      :file_path     => 'lib/ichi.rb',
-      :file_name     => 'ichi',
-      :relative_path => []
-    } # end locals
-  end # let
+      file_path:     'lib/ichi.rb',
+      file_name:     'ichi',
+      relative_path: []
+    }
+  end
   let(:template) do
     File.read 'lib/ruby.erb'
-  end # let
+  end
   let(:rendered) do
-    Erubis::Eruby.new(template).result(locals)
-  end # let
+    binding = tools.hash.generate_binding(locals)
+
+    # rubocop:disable Security/Eval
+    eval(Erubi::Engine.new(template).src, binding)
+    # rubocop:enable Security/Eval
+  end
   let(:raw) do
     <<-RUBY
       # lib/ichi.rb
@@ -24,21 +28,21 @@ RSpec.describe 'ruby.erb' do
 
       end # module
     RUBY
-  end # let
+  end
   let(:expected) do
     offset = raw.match(/\A( +)/)[1].length
 
     tools.string.map_lines(raw) { |line| line[offset..-1] || "\n" }
-  end # let
+  end
 
   def tools
     SleepingKingStudios::Tools::Toolbelt.instance
-  end # method tools
+  end
 
   it { expect(rendered).to be == expected }
 
   describe 'with a superclass' do
-    let(:locals) { super().merge :superclass => 'Ni::San' }
+    let(:locals) { super().merge superclass: 'Ni::San' }
     let(:raw) do
       <<-RUBY
         # lib/ichi.rb
@@ -47,19 +51,19 @@ RSpec.describe 'ruby.erb' do
 
         end # class
       RUBY
-    end # let
+    end
 
     it { expect(rendered).to be == expected }
-  end # describe
+  end
 
   describe 'with a relative path' do
     let(:locals) do
       super().merge(
-        :file_path     => 'lib/ichi/ni/san.rb',
-        :file_name     => 'san',
-        :relative_path => %w(ichi ni)
-      ) # end locals
-    end # let
+        file_path:     'lib/ichi/ni/san.rb',
+        file_name:     'san',
+        relative_path: %w[ichi ni]
+      )
+    end
     let(:raw) do
       <<-RUBY
         # lib/ichi/ni/san.rb
@@ -72,12 +76,12 @@ RSpec.describe 'ruby.erb' do
           end # module
         end # module
       RUBY
-    end # let
+    end
 
     it { expect(rendered).to be == expected }
 
     describe 'with a superclass' do
-      let(:locals) { super().merge :superclass => 'Yon::Go' }
+      let(:locals) { super().merge superclass: 'Yon::Go' }
       let(:raw) do
         <<-RUBY
           # lib/ichi/ni/san.rb
@@ -90,9 +94,9 @@ RSpec.describe 'ruby.erb' do
             end # class
           end # module
         RUBY
-      end # let
+      end
 
       it { expect(rendered).to be == expected }
-    end # describe
-  end # describe
-end # describe
+    end
+  end
+end

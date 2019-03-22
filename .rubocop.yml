@@ -1,0 +1,10 @@
+AllCops:
+  TargetRubyVersion: 2.6
+
+Layout/AlignHash:
+  EnforcedColonStyle: table
+  EnforcedHashRocketStyle: table
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*.rb'

@@ -1,21 +1,26 @@
-# spec/rspec_spec.rb
+# frozen_string_literal: true
 
-require 'erubis'
+require 'erubi'
+require 'byebug'
 
 RSpec.describe 'rspec.erb' do
   let(:locals) do
     {
-      :file_path     => 'spec/ichi_spec.rb',
-      :file_name     => 'ichi_spec',
-      :relative_path => []
-    } # end locals
-  end # let
+      file_path:     'spec/ichi_spec.rb',
+      file_name:     'ichi_spec',
+      relative_path: []
+    }
+  end
   let(:template) do
     File.read 'lib/rspec.erb'
-  end # let
+  end
   let(:rendered) do
-    Erubis::Eruby.new(template).result(locals)
-  end # let
+    binding = tools.hash.generate_binding(locals)
+
+    # rubocop:disable Security/Eval
+    eval(Erubi::Engine.new(template).src, binding)
+    # rubocop:enable Security/Eval
+  end
   let(:raw) do
     <<-RUBY
       # spec/ichi_spec.rb
@@ -26,27 +31,27 @@ RSpec.describe 'rspec.erb' do
         pending
       end # describe
     RUBY
-  end # let
+  end
   let(:expected) do
     offset = raw.match(/\A( +)/)[1].length
 
     tools.string.map_lines(raw) { |line| line[offset..-1] || "\n" }
-  end # let
+  end
 
   def tools
     SleepingKingStudios::Tools::Toolbelt.instance
-  end # method tools
+  end
 
   it { expect(rendered).to be == expected }
 
-  describe 'with a superclass' do
+  describe 'with a relative path' do
     let(:locals) do
       super().merge(
-        :file_path     => 'spec/ichi/ni/san_spec.rb',
-        :file_name     => 'san_spec',
-        :relative_path => %w(ichi ni)
-      ) # end locals
-    end # let
+        file_path:     'spec/ichi/ni/san_spec.rb',
+        file_name:     'san_spec',
+        relative_path: %w[ichi ni]
+      )
+    end
     let(:raw) do
       <<-RUBY
         # spec/ichi/ni/san_spec.rb
@@ -57,8 +62,8 @@ RSpec.describe 'rspec.erb' do
           pending
         end # describe
       RUBY
-    end # let
+    end
 
     it { expect(rendered).to be == expected }
-  end # describe
-end # describe
+  end
+end
