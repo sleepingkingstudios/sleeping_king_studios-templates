@@ -1,6 +1,7 @@
 # spec/rspec_spec.rb
 
-require 'erubis'
+require 'erubi'
+require 'byebug'
 
 RSpec.describe 'rspec.erb' do
   let(:locals) do
@@ -14,7 +15,9 @@ RSpec.describe 'rspec.erb' do
     File.read 'lib/rspec.erb'
   end # let
   let(:rendered) do
-    Erubis::Eruby.new(template).result(locals)
+    binding = tools.hash.generate_binding(locals)
+
+    eval(Erubi::Engine.new(template).src, binding)
   end # let
   let(:raw) do
     <<-RUBY

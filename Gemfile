@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-gem 'erubis', '~> 2.7.0'
+gem 'erubi', '~> 1.8.0'
 gem 'sleeping_king_studios-tools', '~> 0.7', '>= 0.7.1'
 
 group :development, :test do
