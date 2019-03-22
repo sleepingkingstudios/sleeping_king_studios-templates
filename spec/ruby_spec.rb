@@ -22,11 +22,11 @@ RSpec.describe 'ruby.erb' do
   end
   let(:raw) do
     <<-RUBY
-      # lib/ichi.rb
+      # frozen_string_literal: true
 
       module Ichi
 
-      end # module
+      end
     RUBY
   end
   let(:expected) do
@@ -45,11 +45,11 @@ RSpec.describe 'ruby.erb' do
     let(:locals) { super().merge superclass: 'Ni::San' }
     let(:raw) do
       <<-RUBY
-        # lib/ichi.rb
+        # frozen_string_literal: true
 
         class Ichi < Ni::San
 
-        end # class
+        end
       RUBY
     end
 
@@ -66,15 +66,15 @@ RSpec.describe 'ruby.erb' do
     end
     let(:raw) do
       <<-RUBY
-        # lib/ichi/ni/san.rb
+        # frozen_string_literal: true
 
         require 'ichi/ni'
 
         module Ichi::Ni
           module San
 
-          end # module
-        end # module
+          end
+        end
       RUBY
     end
 
@@ -84,15 +84,15 @@ RSpec.describe 'ruby.erb' do
       let(:locals) { super().merge superclass: 'Yon::Go' }
       let(:raw) do
         <<-RUBY
-          # lib/ichi/ni/san.rb
+          # frozen_string_literal: true
 
           require 'ichi/ni'
 
           module Ichi::Ni
             class San < Yon::Go
 
-            end # class
-          end # module
+            end
+          end
         RUBY
       end
 

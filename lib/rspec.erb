@@ -1,7 +1,6 @@
-<%# lib/rspec.erb %>
+# frozen_string_literal: true
 <% require 'sleeping_king_studios/tools' %>
 <% tools = SleepingKingStudios::Tools::Toolbelt.new %>
-# <%= file_path %>
 
 <% full_path = [*relative_path, file_name.sub(/_spec\z/, '')] %>
 require '<%= full_path.join('/') %>'
@@ -12,4 +11,4 @@ require '<%= full_path.join('/') %>'
 %>
 RSpec.describe <%= qualified_module %> do
   pending
-end # describe
+end
