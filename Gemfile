@@ -1,4 +1,4 @@
-# Gemfile
+# frozen_string_literal: true
 
 source 'https://rubygems.org'
 
@@ -12,4 +12,5 @@ end
 group :test do
   gem 'rspec', '~> 3.8'
   gem 'rspec-sleeping_king_studios', '~> 2.5'
+  gem 'rubocop', '~> 0.66.0'
 end
