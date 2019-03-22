@@ -23,13 +23,13 @@ RSpec.describe 'rspec.erb' do
   end
   let(:raw) do
     <<-RUBY
-      # spec/ichi_spec.rb
+      # frozen_string_literal: true
 
       require 'ichi'
 
       RSpec.describe Ichi do
         pending
-      end # describe
+      end
     RUBY
   end
   let(:expected) do
@@ -54,13 +54,13 @@ RSpec.describe 'rspec.erb' do
     end
     let(:raw) do
       <<-RUBY
-        # spec/ichi/ni/san_spec.rb
+        # frozen_string_literal: true
 
         require 'ichi/ni/san'
 
         RSpec.describe Ichi::Ni::San do
           pending
-        end # describe
+        end
       RUBY
     end
 

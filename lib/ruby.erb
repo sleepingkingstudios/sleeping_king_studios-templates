@@ -1,17 +1,16 @@
-<%# lib/ruby.erb %>
+# frozen_string_literal: true
 <% require 'sleeping_king_studios/tools' %>
 <% tools = SleepingKingStudios::Tools::Toolbelt.new %>
-# <%= file_path %>
 
 <% if relative_path.empty? %>
 <% if defined?(superclass) %>
 class <%= tools.string.camelize file_name %> < <%= superclass %>
 
-end # class
+end
 <% else %>
 module <%= tools.string.camelize file_name %>
 
-end # module
+end
 <% end %>
 <% else %>
 require '<%= relative_path.join('/') %>'
@@ -20,11 +19,11 @@ module <%= relative_path.map { |rel| tools.string.camelize(rel) }.join('::') %>
   <% if defined?(superclass) %>
   class <%= tools.string.camelize file_name %> < <%= superclass %>
 
-  end # class
+  end
   <% else %>
   module <%= tools.string.camelize file_name %>
 
-  end # module
+  end
   <% end %>
-end # module
+end
 <% end %>
