@@ -14,7 +14,7 @@ RSpec.describe 'ruby.erb' do
     File.read 'lib/ruby.erb'
   end
   let(:rendered) do
-    binding = tools.hash.generate_binding(locals)
+    binding = tools.hsh.generate_binding(locals)
 
     # rubocop:disable Security/Eval
     eval(Erubi::Engine.new(template).src, binding)
@@ -32,7 +32,7 @@ RSpec.describe 'ruby.erb' do
   let(:expected) do
     offset = raw.match(/\A( +)/)[1].length
 
-    tools.string.map_lines(raw) { |line| line[offset..-1] || "\n" }
+    tools.str.map_lines(raw) { |line| line[offset..-1] || "\n" }
   end
 
   def tools

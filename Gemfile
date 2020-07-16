@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 
 gem 'erubi', '~> 1.8.0'
-gem 'sleeping_king_studios-tools', '~> 0.7', '>= 0.7.1'
+gem 'sleeping_king_studios-tools', '~> 0.8'
 
 group :development, :test do
   gem 'byebug', '~> 11.0', '>= 11.0.1'

@@ -4,24 +4,24 @@
 
 <% if relative_path.empty? %>
 <% if defined?(superclass) %>
-class <%= tools.string.camelize file_name %> < <%= superclass %>
+class <%= tools.str.camelize file_name %> < <%= superclass %>
 
 end
 <% else %>
-module <%= tools.string.camelize file_name %>
+module <%= tools.str.camelize file_name %>
 
 end
 <% end %>
 <% else %>
 require '<%= relative_path.join('/') %>'
 
-module <%= relative_path.map { |rel| tools.string.camelize(rel) }.join('::') %>
+module <%= relative_path.map { |rel| tools.str.camelize(rel) }.join('::') %>
   <% if defined?(superclass) %>
-  class <%= tools.string.camelize file_name %> < <%= superclass %>
+  class <%= tools.str.camelize file_name %> < <%= superclass %>
 
   end
   <% else %>
-  module <%= tools.string.camelize file_name %>
+  module <%= tools.str.camelize file_name %>
 
   end
   <% end %>
