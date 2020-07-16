@@ -7,7 +7,7 @@ require '<%= full_path.join('/') %>'
 
 <%
   qualified_module =
-    full_path.map { |rel| tools.string.camelize(rel) }.join('::')
+    full_path.map { |rel| tools.str.camelize(rel) }.join('::')
 %>
 RSpec.describe <%= qualified_module %> do
   pending
